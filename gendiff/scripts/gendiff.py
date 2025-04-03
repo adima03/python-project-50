@@ -6,7 +6,8 @@ def generate_diff(file1, file2):
     Функция для сравнения двух файлов и вывода их различий.
     В реальной реализации здесь будет логика сравнения файлов.
     """
-    return f"Comparing {file1} and {file2}\nDifferences:\n(Placeholder for actual diff logic)"
+    return f"Comparing {file1} and {file2}\nDifferences:\n(Placeholder\
+          for actual diff logic)"
 
 
 def main():
