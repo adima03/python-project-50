@@ -1,5 +1,6 @@
 import json
 import tempfile
+
 from gendiff.scripts.gendiff import generate_diff
 
 
