@@ -1,22 +1,24 @@
 import argparse
 import json
-import os
 
+import yaml
 
-def read_json_file(path_to_file):
-    if not os.path.isfile(path_to_file):
-        raise FileNotFoundError(f"The file {path_to_file} does not exist.")
-    with open(path_to_file) as file:
-        try:
-            return json.load(file)
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Error decoding \
-            JSON from file {path_to_file}: {e}")
+from gendiff import parsing
 
 
 def generate_diff(file1, file2):
-    data1 = read_json_file(file1)
-    data2 = read_json_file(file2)
+    try:
+        data1 = parsing.read_json_file(file1)
+        data2 = parsing.read_json_file(file2)
+    except:
+        try:
+            data1 = parsing.read_yaml_file(file1)
+            data2 = parsing.read_yaml_file(file2)
+        except yaml.YAMLError as e:
+            raise ValueError(f"Файл не является JSON или YAML: {e}")
+
+    # data1 = read_json_file(file1)
+    # data2 = read_json_file(file2)
     all_keys = sorted(set(data1.keys()) | (data2.keys()))
     result = ["{"]
 
