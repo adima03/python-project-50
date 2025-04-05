@@ -1,60 +1,32 @@
 import argparse
-import json
 
-from gendiff.parsing import read_file
+from gendiff.diff_builder import build_diff
+from gendiff.formatters.stylish import format_diff_stylish
+from gendiff.parsers import parse_data_from_file
 
 
-def generate_diff(file1, file2):
-    try:
-        data1 = read_file(file1)
-        data2 = read_file(file2)
+def generate_diff(file1, file2, format_name='stylish'):
+    data1 = parse_data_from_file(file1)
+    data2 = parse_data_from_file(file2)
+    diff = build_diff(data1, data2)
 
-        if not isinstance(data1, dict) or not isinstance(data2, dict):
-            raise ValueError("Данные в файлах должны быть словарями.")
-
-    except FileNotFoundError as e:
-        raise FileNotFoundError(f"Ошибка при чтении файла: {e}")
-    except ValueError as e:
-        raise ValueError(f"Ошибка при обработке данных: {e}")
-
-    all_keys = sorted(set(data1.keys()).union(data2.keys()))
-    result = ["{"]
-    for key in all_keys:
-        value1 = data1.get(key)
-        value2 = data2.get(key)
-
-        if key in data1 and key not in data2:
-            result.append(f"  - {key}: {json.dumps(value1)}")
-        elif key in data2 and key not in data1:
-            result.append(f"  + {key}: {json.dumps(value2)}")
-        elif value1 != value2:
-            result.append(f"  - {key}: {json.dumps(value1)}")
-            result.append(f"  + {key}: {json.dumps(value2)}")
-        else:
-            result.append(f"    {key}: {json.dumps(value1)}")
-
-    result.append("}")
-    return "\n".join(result)
+    if format_name == 'stylish':
+        return format_diff_stylish(diff)
+    else:
+        raise ValueError(f"Unknown format: {format_name}")
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Compares two configuration files and shows a difference."
-    )
-    parser.add_argument("first_file")
-    parser.add_argument("second_file")
-    parser.add_argument('-f', '--format', help='Set format of output')
-
+    parser = argparse.ArgumentParser(description="Generate "
+                                                 "diff between two files.")
+    parser.add_argument("file1", help="Path to the first file")
+    parser.add_argument("file2", help="Path to the second file")
+    parser.add_argument("-f", "--format", default="stylish",
+                        help="Output format (default: stylish)")
     args = parser.parse_args()
 
-    try:
-        result = generate_diff(args.first_file, args.second_file)
-        print(result)
-    except Exception as e:
-        print(f"Error: {e}")
+    print(generate_diff(args.file1, args.file2, args.format))
 
 
 if __name__ == "__main__":
     main()
-
-
