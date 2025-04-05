@@ -1,27 +1,24 @@
 import argparse
 import json
 
-import yaml
-
-from gendiff import parsing
+from gendiff.parsing import read_file
 
 
 def generate_diff(file1, file2):
     try:
-        data1 = parsing.read_json_file(file1)
-        data2 = parsing.read_json_file(file2)
-    except:
-        try:
-            data1 = parsing.read_yaml_file(file1)
-            data2 = parsing.read_yaml_file(file2)
-        except yaml.YAMLError as e:
-            raise ValueError(f"Файл не является JSON или YAML: {e}")
+        data1 = read_file(file1)
+        data2 = read_file(file2)
 
-    # data1 = read_json_file(file1)
-    # data2 = read_json_file(file2)
-    all_keys = sorted(set(data1.keys()) | (data2.keys()))
+        if not isinstance(data1, dict) or not isinstance(data2, dict):
+            raise ValueError("Данные в файлах должны быть словарями.")
+
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Ошибка при чтении файла: {e}")
+    except ValueError as e:
+        raise ValueError(f"Ошибка при обработке данных: {e}")
+
+    all_keys = sorted(set(data1.keys()).union(data2.keys()))
     result = ["{"]
-
     for key in all_keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
@@ -37,7 +34,6 @@ def generate_diff(file1, file2):
             result.append(f"    {key}: {json.dumps(value1)}")
 
     result.append("}")
-
     return "\n".join(result)
 
 
