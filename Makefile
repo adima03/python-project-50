@@ -1,4 +1,4 @@
-lint:
+check:
 	uv run ruff check
 
 install:

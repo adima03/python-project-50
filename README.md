@@ -72,7 +72,7 @@ uv run gendiff tests/test_data/<file1> tests/test_data/<file2>
 ### Linting
 Run ruff to check for linting issues:
 ```
-make lint
+make check
 ```
 Running Tests
 ```
