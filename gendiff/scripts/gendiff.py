@@ -1,6 +1,8 @@
 import argparse
 
 from gendiff.diff_builder import build_diff
+from gendiff.formatters.json import format_diff_json
+from gendiff.formatters.plain import format_diff_plain
 from gendiff.formatters.stylish import format_diff_stylish
 from gendiff.parsers import parse_data_from_file
 
@@ -12,8 +14,12 @@ def generate_diff(file1, file2, format_name='stylish'):
 
     if format_name == 'stylish':
         return format_diff_stylish(diff)
+    if format_name == 'plain':
+        return format_diff_plain(diff)
+    if format_name == 'json':
+        return format_diff_json(diff)
     else:
-        raise ValueError(f"Unknown format: {format_name}")
+        raise ValueError(f"Unsupported formatter: {format_name}")
 
 
 def main():
