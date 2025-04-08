@@ -1,6 +1,5 @@
-check:
+lint:
 	uv run ruff check
-	uv run pytest
 
 install:
 	uv sync 
@@ -10,4 +9,7 @@ build:
 
 package-install:
 	uv tool install dist/*.whl
+
+make tests:
+	uv run pytest
 
