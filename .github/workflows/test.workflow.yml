@@ -26,9 +26,7 @@ jobs:
         run: |
           uv run pytest --cov=gendiff --cov-report=xml --cov-report=html --cov-report=term tests/
       - name: SonarQubeScan
-        # Find SHA at: https://github.com/SonarSource/sonarqube-scan-action/releases/tag/v5
-        # Or use: git ls-remote https://github.com/SonarSource/sonarqube-scan-action.git refs/tags/v5
-        uses: SonarSource/sonarqube-scan-action@d6bf2d082dc6e0f0a47e76fbbc600bd8bb6f11bd
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:

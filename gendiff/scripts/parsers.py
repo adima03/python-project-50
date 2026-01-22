@@ -14,15 +14,15 @@ def read_file(file_path):
         return file.read()
 
 
-def parse_data(data, file_format):
-    if file_format == 'json':
+def parse_data(data, format):
+    if format == 'json':
         return json.loads(data)
-    if file_format == 'yaml' or file_format == 'yml':
+    if format == 'yaml' or format == 'yml':
         return yaml.safe_load(data)
-    raise ValueError(f'Unsupported file format: {file_format}')
+    raise ValueError(f'Unsupported file format: {format}')
 
 
 def parse_data_from_file(file_path):
     data = read_file(file_path)
-    file_format = get_file_format(file_path)
-    return parse_data(data, file_format)
+    format = get_file_format(file_path)
+    return parse_data(data, format)
