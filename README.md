@@ -1,5 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/adima03/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/adima03/python-project-50/actions)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=adima03_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=adima03_python-project-50)
 
 https://asciinema.org/a/dgePPUSNZKQ6sYiPhz5Jj8DHu
 
