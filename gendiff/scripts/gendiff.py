@@ -1,4 +1,19 @@
 import argparse
+import sys
+from pathlib import Path
+
+# Fix import path when running script directly
+# Remove the script's directory from sys.path to avoid conflicts
+script_dir = Path(__file__).resolve().parent
+script_dir_str = str(script_dir)
+if script_dir_str in sys.path:
+    sys.path.remove(script_dir_str)
+
+# Add project root to Python path (two levels up from this script)
+project_root = script_dir.parent.parent
+project_root_str = str(project_root)
+if project_root_str not in sys.path:
+    sys.path.insert(0, project_root_str)
 
 from gendiff.diff_builder import build_diff
 from gendiff.formatters.json import format_diff_json
