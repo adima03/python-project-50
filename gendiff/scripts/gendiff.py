@@ -15,10 +15,10 @@ project_root_str = str(project_root)
 if project_root_str not in sys.path:
     sys.path.insert(0, project_root_str)
 
-from gendiff.scripts.diff_builder import build_diff  # noqa: E402
 from gendiff.formatters.json import format_diff_json  # noqa: E402
 from gendiff.formatters.plain import format_diff_plain  # noqa: E402
 from gendiff.formatters.stylish import format_diff_stylish  # noqa: E402
+from gendiff.scripts.diff_builder import build_diff  # noqa: E402
 from gendiff.scripts.parsers import parse_data_from_file  # noqa: E402
 
 

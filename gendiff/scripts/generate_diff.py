@@ -1,5 +1,5 @@
-from gendiff.scripts.diff_builder import build_diff
 from gendiff.formatters.format_identifier import format_identifier
+from gendiff.scripts.diff_builder import build_diff
 from gendiff.scripts.parsers import parse_data_from_file
 
 
