@@ -10,6 +10,6 @@ build:
 package-install:
 	uv tool install dist/*.whl
 
-make tests:
+test:
 	uv run pytest
 

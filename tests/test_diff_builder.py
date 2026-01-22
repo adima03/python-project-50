@@ -1,6 +1,6 @@
 import pytest
 
-from gendiff.parsers import read_file
+from gendiff.scripts.parsers import read_file
 from gendiff.scripts.gendiff import generate_diff
 
 
